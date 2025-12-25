@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Generate Table QR Codes</title>
+  <link rel="stylesheet" href="style.css"/>
+  <style>
+    .qrgrid { display:grid; gap:12px; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); }
+    .qrbox { display:flex; flex-direction:column; gap:10px; align-items:center; }
+    .qrbox img { width: 180px; height: 180px; border: 6px solid #fff; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,.12); background:#fff; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="row">
+      <div style="font-weight:900">QR Generator</div>
+      <span class="badge">Tables</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card">
+      <div class="note">Base URL (must be reachable by phone)</div>
+      <input id="baseUrl" placeholder="Example: http://192.168.1.7:5500/menu.html" />
+
+      <div class="spacer"></div>
+
+      <div class="row">
+        <div style="flex:1">
+          <div class="note">How many tables?</div>
+          <input id="tableCount" type="number" value="10" min="1" />
+        </div>
+        <div style="flex:1">
+          <div class="note">Start from</div>
+          <input id="tableStart" type="number" value="1" min="1" />
+        </div>
+      </div>
+
+      <div class="spacer"></div>
+      <button class="btn primary" onclick="makeQRs()">Generate QR Codes</button>
+
+      <div class="spacer"></div>
+      <div class="note">
+        Tip: Phone cannot open 127.0.0.1. Use your PC IPv4 (192.168.x.x). Phone + PC must be on same Wi-Fi.
+      </div>
+
+      <div class="spacer"></div>
+      <div id="status" class="note"></div>
+    </div>
+
+    <div class="spacer"></div>
+    <div id="qrGrid" class="qrgrid"></div>
+  </div>
+
+  <!-- OFFLINE QR library -->
+  <script src="qrcode.min.js"></script>
+
+  <script>
+    function normalizeBase(base) { return base.replace(/\/+$/, ""); }
+
+    function makeQRs() {
+      const status = document.getElementById("status");
+      const baseRaw = document.getElementById("baseUrl").value.trim();
+      const count = Number(document.getElementById("tableCount").value);
+      const start = Number(document.getElementById("tableStart").value);
+
+      if (!window.QRCode) {
+        status.innerHTML = '<span class="err">qrcode.min.js not found. Put it in the same folder as qrcodes.html</span>';
+        return;
+      }
+      if (!baseRaw) {
+        status.innerHTML = '<span class="err">Please enter Base URL.</span>';
+        return;
+      }
+
+      const base = normalizeBase(baseRaw);
+      if (!Number.isFinite(count) || count <= 0) return alert("Invalid table count");
+      if (!Number.isFinite(start) || start <= 0) return alert("Invalid start number");
+
+      status.innerHTML = '<span class="ok">Generating...</span>';
+      const grid = document.getElementById("qrGrid");
+      grid.innerHTML = "";
+
+      for (let t = start; t < start + count; t++) {
+        const url = `${base}?table=${t}`;
+
+        const card = document.createElement("div");
+        card.className = "card qrbox";
+        card.innerHTML = `
+          <div style="font-weight:900">Table ${t}</div>
+          <div id="qr-${t}"></div>
+          <div class="note" style="word-break:break-all;text-align:center">${url}</div>
+          <button class="btn gray small" onclick="window.open('${url}', '_blank')">Open Menu</button>
+        `;
+        grid.appendChild(card);
+
+        // qrcodejs creates an <img> inside the div
+        new QRCode(document.getElementById(`qr-${t}`), {
+          text: url,
+          width: 180,
+          height: 180,
+          correctLevel: QRCode.CorrectLevel.M
+        });
+      }
+
+      status.innerHTML = '<span class="ok">Done ✅</span>';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>POKOLANE MENU</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body data-page="menu">
+  <header>
+    <div class="row">
+      <div class="brand">POKOLANE MENU</div>
+      <div class="badge" id="tableBadge">Table</div>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card pokolaneTop">
+      <div class="bigTitle">Order your food here!</div>
+      <div class="spacer"></div>
+
+      <input id="searchInput" placeholder="Search" oninput="applyMenuFilters()" />
+
+      <div class="spacer"></div>
+      <div id="catChips" class="chips"></div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="split">
+      <div id="menuList" class="menuList"></div>
+
+      <div class="card">
+        <div style="font-weight:900">Your Order</div>
+        <div class="spacer"></div>
+
+        <div id="cartItems"></div>
+
+        <hr>
+
+        <div class="note">Request to chef</div>
+        <textarea id="chefRequest" placeholder="e.g., No spicy, less salt..."></textarea>
+
+        <div class="spacer"></div>
+
+        <div class="row" style="justify-content: space-between;">
+          <div style="font-weight:900">Total</div>
+          <div style="font-weight:900">$<span id="totalPrice">0.00</span></div>
+        </div>
+
+        <div class="spacer"></div>
+        <button class="btn primary" onclick="submitOrder()">Order</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

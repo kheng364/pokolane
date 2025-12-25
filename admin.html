@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>POKOLANE Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body data-page="admin">
+  <header>
+    <div class="row">
+      <div class="brand">POKOLANE ADMIN</div>
+      <div class="row">
+        <a class="btn gray small" href="qrcodes.html">QR Codes</a>
+        <button class="btn primary small" onclick="adminLogout()">Logout</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+    <!-- KPI cards -->
+    <div class="kpiGrid">
+      <div class="card kpiCard">
+        <div class="note">Today Orders</div>
+        <div class="kpiNum" id="kpiTodayOrders">0</div>
+      </div>
+      <div class="card kpiCard">
+        <div class="note">Today Sales</div>
+        <div class="kpiNum" id="kpiTodaySales">$0.00</div>
+      </div>
+      <div class="card kpiCard">
+        <div class="note">Total Orders</div>
+        <div class="kpiNum" id="kpiTotalOrders">0</div>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Sales per day chart -->
+    <div class="card">
+      <div style="font-weight:900">Sales Per Day</div>
+      <div class="spacer"></div>
+      <canvas id="salesChart" height="120"></canvas>
+      <div class="spacer"></div>
+      <div class="note">This chart is calculated from orders grouped by date.</div>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Orders -->
+    <div id="ordersWrap"></div>
+
+    <div class="spacer"></div>
+
+    <!-- Foods -->
+    <div id="foodsWrap"></div>
+
+    <div class="spacer"></div>
+
+    <!-- Category note -->
+    <div class="card pokolaneTop">
+      <div class="bigTitle">Categories</div>
+      <div class="spacer"></div>
+      <div class="chips">
+        <div class="chip active">Grill</div>
+        <div class="chip active">Fry</div>
+        <div class="chip active">Soup</div>
+        <div class="chip active">Rice</div>
+        <div class="chip active">Fast Food</div>
+        <div class="chip active">Drink</div>
+        <div class="chip active">Beer</div>
+      </div>
+      <div class="spacer"></div>
+      <div class="note" style="color:#111;">
+        When you add/update foods, use these exact category names (case sensitive).
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart.js (for sales chart) -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Your app -->
+  <script src="app.js"></script>
+</body>
+</html>

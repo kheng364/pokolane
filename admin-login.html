@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>POKOLANE Admin Login</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body data-page="admin-login">
+  <header>
+    <div class="row">
+      <div class="brand">POKOLANE ADMIN</div>
+      <span class="badge">Login</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="card pokolaneTop" style="max-width:520px;margin:24px auto;">
+      <div class="bigTitle">Admin Login</div>
+      <div class="spacer"></div>
+
+      <div class="note" style="color:#111;font-weight:800;">Username</div>
+      <input id="username" placeholder="admin" />
+
+      <div class="spacer"></div>
+
+      <div class="note" style="color:#111;font-weight:800;">Password</div>
+      <input id="password" type="password" placeholder="1234" />
+
+      <div class="spacer"></div>
+
+      <button class="btn primary" style="width:100%" onclick="adminLogin()">Login</button>
+
+      <div class="spacer"></div>
+
+      <button class="btn gray" style="width:100%" onclick="resetAdminCred()">
+        Reset to default (admin / 1234)
+      </button>
+
+      <div class="spacer"></div>
+      <div class="note" style="color:#111;">
+        Tip: For phone testing, open this page using your IPv4:
+        <b>http://192.168.xx.xx:5500/admin-login.html</b>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
